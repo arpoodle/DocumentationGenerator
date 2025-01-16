@@ -69,7 +69,7 @@ def generate_documentation_with_openai(file_path, file_content):
     Calls OpenAI API to generate documentation for a file's content.
     """
     prompt_text = f"""
-Can you write a short page documenting this scrfipt? {os.path.splitext(file_path)[1]}
+Can you write a short page documenting this script? {os.path.splitext(file_path)[1]}
 File content:
 {file_content}
 """
