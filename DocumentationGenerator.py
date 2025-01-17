@@ -15,7 +15,7 @@ MODEL_NAME = "gpt-4o"
 LOCAL_REPO_PATH = "./"  # Path to the local repository
 
 # We only care about these file extensions
-FILE_EXTENSIONS = [".sql", ".sh", ".php"]
+FILE_EXTENSIONS = [".sql", ".sh", ".php",".java"]
 
 # Overview file name
 OVERVIEW_FILENAME = "PROJECT_OVERVIEW.md"
@@ -23,7 +23,7 @@ OVERVIEW_FILENAME = "PROJECT_OVERVIEW.md"
 # Regex patterns for includes/requires (simple approach)
 PHP_INCLUDE_PATTERN = r'(include|require)(_once)?\s*\(?[\'"]([^\'"]+)[\'"]\)?'
 SQL_INCLUDE_PATTERN = r'\\i\s+([^;\s]+)'
-
+JAVA_INCLUDE_PATTERN = r'(import)?\s*\(?[\'"]([^\'"]+)[\'"]\)?'
 # -----------------------------
 # HELPER FUNCTIONS
 # -----------------------------
@@ -103,6 +103,9 @@ def find_references_in_content(file_path, content):
         references.extend(m[2] for m in matches)
     elif ext == ".sql":
         matches = re.findall(SQL_INCLUDE_PATTERN, content)
+        references.extend(m.strip() for m in matches)
+    elif ext == ".java":
+        matches = re.findall(JAVA_INCLUDE_PATTERN, content)
         references.extend(m.strip() for m in matches)
 
     return references
